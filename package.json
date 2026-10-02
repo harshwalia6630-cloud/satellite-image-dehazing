@@ -1,0 +1,12 @@
+{
+  "name": "satellite-image-dehazing-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:web": "node tests/web_parity.mjs",
+    "serve": "python scripts/serve_web.py 8300"
+  },
+  "devDependencies": {
+    "onnxruntime-node": "1.30.0"
+  }
+}

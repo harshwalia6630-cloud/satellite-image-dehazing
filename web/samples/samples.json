@@ -1,0 +1,52 @@
+[
+  {
+    "file": "river_of_haze_india.jpg",
+    "thumb": "river_of_haze_india_thumb.jpg",
+    "title": "A river of haze over the Ganges plain, India (2012)",
+    "credit": "NASA Earth Observatory / Goddard Space Flight Center, public domain (via Wikimedia Commons).",
+    "size": [
+      720,
+      480
+    ]
+  },
+  {
+    "file": "northern_india.jpg",
+    "thumb": "northern_india_thumb.jpg",
+    "title": "Haze over northern India (MODIS)",
+    "credit": "NASA Earth Observatory / Goddard Space Flight Center, public domain (via Wikimedia Commons).",
+    "size": [
+      900,
+      599
+    ]
+  },
+  {
+    "file": "eastern_china.jpg",
+    "thumb": "eastern_china_thumb.jpg",
+    "title": "Haze over eastern China (MODIS, 2015-12-16)",
+    "credit": "NASA Earth Observatory / Goddard Space Flight Center, public domain (via Wikimedia Commons).",
+    "size": [
+      660,
+      580
+    ]
+  },
+  {
+    "file": "po_valley.jpg",
+    "thumb": "po_valley_thumb.jpg",
+    "title": "Haze in the Po Valley, Italy (MODIS, 2019-10-15)",
+    "credit": "NASA Earth Observatory / Goddard Space Flight Center, public domain (via Wikimedia Commons).",
+    "size": [
+      900,
+      420
+    ]
+  },
+  {
+    "file": "seasonal_india_2024.jpg",
+    "thumb": "seasonal_india_2024_thumb.jpg",
+    "title": "Seasonal haze over northern India (MODIS, 2024-11-02)",
+    "credit": "NASA Earth Observatory / Goddard Space Flight Center, public domain (via Wikimedia Commons).",
+    "size": [
+      1024,
+      782
+    ]
+  }
+]

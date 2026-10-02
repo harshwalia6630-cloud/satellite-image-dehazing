@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Satellite Dehazing · Encoder-decoder CNN in your browser</title>
+<meta name="description" content="Remove haze from satellite images with an encoder-decoder deep learning model that runs entirely in your browser.">
+<meta property="og:title" content="Satellite Image Dehazing">
+<meta property="og:description" content="Encoder-decoder CNN that restores visibility in hazy satellite imagery, running entirely in your browser.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230d9488'/><circle cx='16' cy='16' r='7' fill='none' stroke='white' stroke-width='2.5'/><path d='M6 16h4M22 16h4M16 6v4M16 22v4' stroke='white' stroke-width='2.5' stroke-linecap='round'/></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top"><span class="logo" aria-hidden="true"></span>Satellite Dehazing</a>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#results">Results</a>
+      <a class="gh" href="https://github.com/harshwalia6630-cloud/satellite-image-dehazing" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <p class="eyebrow">Image restoration · Encoder-decoder CNN · TensorFlow</p>
+    <h1>See through the haze.<br>Restore hazy satellite images.</h1>
+    <p class="lede">A U-Net style encoder-decoder trained on 6,600 satellite images with physically based haze. Pick a real NASA image below or upload your own.
+      Large images are processed patch by patch, <strong>entirely in your browser</strong>.</p>
+    <ul class="stats" id="stats">
+      <li><b id="s-psnr">–</b><span>PSNR on 3,300 test pairs</span></li>
+      <li><b id="s-gain">–</b><span>PSNR vs dark channel prior</span></li>
+      <li><b id="s-ssim">–</b><span>SSIM</span></li>
+      <li><b id="s-haze">–</b><span>less residual haze vs DCP</span></li>
+    </ul>
+  </section>
+
+  <section class="wrap demo" aria-label="Demo">
+    <div class="card demo-card">
+      <div class="demo-head">
+        <h2>Try it</h2>
+        <p class="muted small" id="status">Loading model…</p>
+      </div>
+      <div class="progress" id="load-progress"><div></div></div>
+      <div class="demo-body">
+        <div class="viewer">
+          <div class="compare" id="compare" aria-label="Before and after comparison">
+            <canvas id="after"></canvas>
+            <canvas id="before"></canvas>
+            <div class="handle" id="handle" role="slider" aria-label="Comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0"><span></span></div>
+            <span class="tag-l">Hazy</span><span class="tag-r">Dehazed</span>
+            <div class="placeholder" id="placeholder">Choose a sample or upload an image</div>
+            <div class="busy" id="busy" hidden><div class="spinner"></div><p id="busy-text">Dehazing…</p><div class="progress inline"><div id="tile-bar"></div></div></div>
+          </div>
+        </div>
+        <aside class="side">
+          <h3>Real NASA imagery</h3>
+          <div class="samples" id="samples"></div>
+          <label class="upload" id="upload">
+            <input type="file" id="file" accept="image/*" hidden>
+            <b>Upload your own</b><span class="muted small">JPG / PNG, processed locally</span>
+          </label>
+          <h3>Result</h3>
+          <dl class="kv">
+            <dt>Image size</dt><dd id="r-size">–</dd>
+            <dt>Patches</dt><dd id="r-tiles">–</dd>
+            <dt>Time</dt><dd id="r-time">–</dd>
+            <dt>Haze density (dark channel)</dt><dd id="r-haze">–</dd>
+          </dl>
+          <button class="primary" id="download" type="button" disabled>Download result</button>
+          <p class="muted small credit" id="credit"></p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="wrap section">
+    <h2 class="section-title">How it works</h2>
+    <ol class="steps">
+      <li class="card"><span class="num">1</span><h3>Physics-based training data</h3><p>Clean satellite scenes get synthetic haze from the atmospheric scattering model I = J·t + A(1−t). Smooth fractal fields make the haze non-uniform, as real haze is.</p></li>
+      <li class="card"><span class="num">2</span><h3>Encoder-decoder</h3><p>Three stride-2 encoder stages and a residual bottleneck feed three upsampling stages with skip connections. The network predicts a residual that is added back to the input.</p></li>
+      <li class="card"><span class="num">3</span><h3>Patch-based reconstruction</h3><p>Images are split into overlapping 256 px patches, and each patch is restored separately. Raised-cosine blending removes seams, so images of any size fit in memory.</p></li>
+      <li class="card"><span class="num">4</span><h3>In the browser</h3><p>The Keras model is exported to ONNX and runs on ONNX Runtime Web (multithreaded WebAssembly). Your images never leave the device.</p></li>
+    </ol>
+  </section>
+
+  <section id="results" class="wrap section">
+    <h2 class="section-title">Results</h2>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Test set: 1,100 unseen scenes × 3 haze levels</h3>
+        <table id="results-table">
+          <thead><tr><th>Method</th><th>PSNR (dB) ↑</th><th>SSIM ↑</th><th>Residual haze ↓</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <p class="muted small">PSNR by haze level for this model: <span id="by-level">–</span></p>
+      </div>
+      <div class="card">
+        <h3>Honest notes</h3>
+        <ul class="ticks warn-list">
+          <li>Training and test haze are <b>synthetic</b>, generated with the same physics model on different images. That gives exact ground truth, but real haze can differ.</li>
+          <li>The NASA samples are <b>MODIS images at 250 m to 1 km per pixel</b>, far coarser than the 0.2 to 30 m training imagery. They show how the model generalises; there is no ground truth for them.</li>
+          <li>Thick haze that hides the ground completely cannot be recovered. The model can only restore what is still faintly visible.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap footer">
+  <p>Built by Harshvardhan Singh Ahluwalia · Python, TensorFlow/Keras, OpenCV, ONNX Runtime Web · <a href="https://github.com/harshwalia6630-cloud/satellite-image-dehazing" target="_blank" rel="noopener">Source code</a></p>
+  <p class="muted small">Sample images: NASA Earth Observatory / Goddard Space Flight Center (public domain).</p>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

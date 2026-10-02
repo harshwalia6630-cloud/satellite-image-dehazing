@@ -1,0 +1,14 @@
+{
+  "river_of_haze_india.jpg": {
+    "dark_channel_before": 0.2239,
+    "dark_channel_after": 0.1413
+  },
+  "seasonal_india_2024.jpg": {
+    "dark_channel_before": 0.3765,
+    "dark_channel_after": 0.1605
+  },
+  "po_valley.jpg": {
+    "dark_channel_before": 0.0843,
+    "dark_channel_after": 0.035
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "test_pairs": 3300,
+  "summary": {
+    "all": {
+      "hazy input": {
+        "psnr": 13.3434,
+        "ssim": 0.7392,
+        "ciede2000": 20.4835,
+        "residual_haze": 0.3095
+      },
+      "dark channel prior": {
+        "psnr": 20.6426,
+        "ssim": 0.8885,
+        "ciede2000": 9.5393,
+        "residual_haze": 0.0805
+      },
+      "ours": {
+        "psnr": 27.6594,
+        "ssim": 0.9731,
+        "ciede2000": 5.172,
+        "residual_haze": 0.0417
+      }
+    },
+    "thin": {
+      "hazy input": {
+        "psnr": 16.5139,
+        "ssim": 0.8535,
+        "ciede2000": 13.5456,
+        "residual_haze": 0.2096
+      },
+      "dark channel prior": {
+        "psnr": 21.9451,
+        "ssim": 0.8942,
+        "ciede2000": 8.2531,
+        "residual_haze": 0.0814
+      },
+      "ours": {
+        "psnr": 29.7658,
+        "ssim": 0.9811,
+        "ciede2000": 3.8737,
+        "residual_haze": 0.0374
+      }
+    },
+    "moderate": {
+      "hazy input": {
+        "psnr": 12.8907,
+        "ssim": 0.7419,
+        "ciede2000": 20.7223,
+        "residual_haze": 0.3135
+      },
+      "dark channel prior": {
+        "psnr": 20.6146,
+        "ssim": 0.8889,
+        "ciede2000": 9.5623,
+        "residual_haze": 0.0772
+      },
+      "ours": {
+        "psnr": 27.5163,
+        "ssim": 0.9733,
+        "ciede2000": 5.2168,
+        "residual_haze": 0.0412
+      }
+    },
+    "thick": {
+      "hazy input": {
+        "psnr": 10.6255,
+        "ssim": 0.6223,
+        "ciede2000": 27.1825,
+        "residual_haze": 0.4055
+      },
+      "dark channel prior": {
+        "psnr": 19.3682,
+        "ssim": 0.8825,
+        "ciede2000": 10.8026,
+        "residual_haze": 0.0829
+      },
+      "ours": {
+        "psnr": 25.696,
+        "ssim": 0.9647,
+        "ciede2000": 6.4253,
+        "residual_haze": 0.0465
+      }
+    }
+  },
+  "psnr_gain_vs_dcp_pct": 34.0,
+  "psnr_gain_vs_hazy_pct": 107.3,
+  "residual_haze_reduction_vs_dcp_pct": 48.2,
+  "ciede2000_reduction_vs_dcp_pct": 45.8,
+  "ours_beats_dcp_psnr_share": 0.9327,
+  "seconds_per_256px_image": {
+    "dark channel prior": 0.0059,
+    "ours": 0.0448
+  }
+}

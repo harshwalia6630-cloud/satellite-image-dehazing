@@ -1,0 +1,7 @@
+{
+  "parameters": 6573091,
+  "epochs": 60,
+  "best_val_psnr": 27.76,
+  "patch": 192,
+  "batch_size": 16
+}
